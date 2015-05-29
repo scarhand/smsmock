@@ -14,7 +14,7 @@ module SmsMock
 
     RSpec::Matchers.define :be_sent_to do |to|
       match do |message|
-        message.number == to
+        message.to == to
       end
     end
 

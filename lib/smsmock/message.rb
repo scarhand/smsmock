@@ -1,9 +1,9 @@
 module SmsMock
   class Message
-    attr_accessor :number, :body, :from
+    attr_accessor :to, :body, :from
     
     def initialize(opts={})
-      @number = opts[:number]
+      @to = opts[:to]
       @body = opts[:body]
       @from = opts[:from]
     end
