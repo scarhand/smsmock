@@ -1,8 +1,5 @@
 module SmsMock
   class Client
-    def initialize(config)
-    end
-
     def Client.messages
       @@messages ||= []
     end
