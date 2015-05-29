@@ -28,15 +28,35 @@ module SmsMock
       end
     end
 
+    RSpec::Matchers.define :have_sent do |size|
+      match do |client|
+        if !size.nil?
+          client.messages.size == size
+        else
+          !client.messages.empty?
+        end
+      end
+
+      chain :messages, :void
+    end
+
     RSpec::Matchers.define :have_sent_message_to do |to|
       match do |client|
-        !(client.messages.find { |message| message.to == to } ).nil?
+        if client.respond_to? :messages
+          !(client.messages.find { |message| message.to == to } ).nil?
+        else
+          client.to == to
+        end
       end
     end
 
     RSpec::Matchers.define :have_sent_message_from do |from|
       match do |client|
-        !(client.messages.find { |message| message.from == from } ).nil?
+        if client.respond_to? :messages
+          !(client.messages.find { |message| message.from == from } ).nil?
+        else
+          client.from == from
+        end
       end
     end
 
@@ -45,5 +65,9 @@ module SmsMock
         !(client.messages.find { |message| message.body == body } ).nil?
       end
     end
+
+    RSpec::Matchers.alias_matcher :to, :have_sent_message_to
+    RSpec::Matchers.alias_matcher :from, :have_sent_message_from
+    RSpec::Matchers.alias_matcher :with_body, :have_sent_message_with_body
   end
 end
