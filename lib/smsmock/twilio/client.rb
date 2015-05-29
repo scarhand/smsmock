@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    class Client
+    class Client < BaseClient
       def initialize(account_sid, auth_token)
         @account_sid = account_sid
         @auth_token = auth_token
@@ -11,7 +11,7 @@ module Twilio
       end
     end
 
-    class Account
+    class Account < InstanceResource
       def initialize
       end
 
@@ -20,7 +20,7 @@ module Twilio
       end
     end
 
-    class Sms
+    class Sms < InstanceResource
       def initialize
       end
 
@@ -29,7 +29,7 @@ module Twilio
       end
     end
 
-    class Messages
+    class Messages < ListResource
       include SmsMock::Helpers
       def initialize
       end
